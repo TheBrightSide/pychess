@@ -95,6 +95,7 @@ while True:
         for i, figure in enumerate(figures, start=0):
             if FIGURE_NUMS[i] == 0: continue
             if event.type == MOUSEBUTTONDOWN:
+                print(i)
                 if figure.rect.contains(pygame.Rect(int(mousePosition.x), int(mousePosition.y), 1, 1)) and not selected:
                     selectedFigure = i
                     selected = True
