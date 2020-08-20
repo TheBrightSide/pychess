@@ -1,5 +1,6 @@
 import pygame
 import os
+#from boundary import *
 
 black_figures = {
     "rook": 'figures\\Black\\rook.png',
