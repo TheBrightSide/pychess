@@ -44,13 +44,8 @@ class Square(pygame.sprite.Sprite):
         self.rect.y = position[1]
 
 class Figure(pygame.sprite.Sprite):
-    def __init__(self, position, figureType, chessboardPlacement):
+    def __init__(self, position, figureType):
         super().__init__()
-        # if (figureType > 0):
-        #     self.image = pygame.image.load(white_figures[figureType-1])
-        # elif (figureType < 0):
-        #     self.image = pygame.image.load(black_figures[abs(figureType+1)])
-        self.chessboardPlacement = chessboardPlacement
         self.image = getFigureSprite(figureType)
         self.image = pygame.transform.smoothscale(self.image, (64, 64))
         self.rect = self.image.get_rect()

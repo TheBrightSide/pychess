@@ -14,8 +14,6 @@ FramePerSec = pygame.time.Clock()
 displaysurface = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("chess lmao")
 
-# figure = Figure((64, 64), -1)
-
 chessboard = pygame.sprite.Group()
 figures = pygame.sprite.Group()
 
@@ -27,6 +25,17 @@ oldPos = []
 currPos = []
 signal = False
 clickedPiece = 0
+
+figureboard = [
+    [22, 23, 24, 26, 25, 24, 23, 22],
+    [21, 21, 21, 21, 21, 21, 21, 21],
+    [ 0,  0,  0,  0,  0,  0,  0,  0],
+    [ 0,  0,  0,  0,  0,  0,  0,  0],
+    [ 0,  0,  0,  0,  0,  0,  0,  0],
+    [ 0,  0,  0,  0,  0,  0,  0,  0],
+    [11, 11, 11, 11, 11, 11, 11, 11],
+    [12, 13, 14, 16, 15, 14, 13, 12]
+]
 
 for h in range(CHESSBOARD_TILES):
     currColor = None
@@ -41,34 +50,14 @@ for h in range(CHESSBOARD_TILES):
     else:
         y += 1
 
-x, y = 0, 0
-for h in range(CHESSBOARD_TILES):
-    if(FIGURE_NUMS[h] != 0):
-        figures.add(Figure((64*x, 64*y), FIGURE_NUMS[h], h))
-    if h % 8 == 7:
-        y += 1
-        x = 0
-    else:
-        x += 1
-del x, y
-
-print(len(chessboard))
-print(len(figures))
+for x, row in enumerate(FIGURE_NUMS, start=0):
+    for y, figType in enumerate(row, start=0):
+        if(figType != 0):
+            figures.add(Figure((64*y, 64*x), figType))
 
 # x coordinates increase from left to right, y coordinates increase from top to bottom
 
 naHod = True
-
-figureboard = [
-    [ 22, 23, 24, 26, 25, 24, 23, 22],
-    [ 21, 21, 21, 21, 21, 21, 21, 21],
-    [ 0,  0,  0,  0,  0,  0,  0,  0],
-    [ 0,  0,  0,  0,  0,  0,  0,  0],
-    [ 0,  0,  0,  0,  0,  0,  0,  0],
-    [ 0,  0,  0,  0,  0,  0,  0,  0],
-    [ 11, 11, 11, 11, 11, 11, 11, 11],
-    [ 12, 13, 14, 16, 15, 14, 13, 12]
-]
 
 def drawSignal(x, y):
     pygame.draw.rect(displaysurface, (0, 139, 69), (y*64, x*64, 64, 64), 0)
@@ -334,19 +323,12 @@ while True:
                     FIGURE_NUMS[oldPos[0]][oldPos[1]] = 0
                     currPos = [i[0], i[1]]
 
-    
-    # for entity in all_sprites:
-    #     displaysurface.blit(entity.surf, entity.rect)
-
     chessboard.draw(displaysurface)
 
     if clicked == True:
         mcoord = [pos[1]//64, pos[0]//64]
         if figureboard[mcoord[0]][mcoord[1]] != 0:
             showTheVariants(mcoord[0], mcoord[1])
-
-    # if signal == False:
-    #    clicked = False
 
     figures.draw(displaysurface)
     pygame.display.update()
